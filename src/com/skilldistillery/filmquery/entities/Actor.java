@@ -1,13 +1,11 @@
 package com.skilldistillery.filmquery.entities;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Actor {
 	private int id;
 	private String firstName;
 	private String lastName;
-	//private List<Film> film;
 	
 	//Method
 	
@@ -43,14 +41,6 @@ public class Actor {
 		this.lastName = lastName;
 	}
 	
-
-//	public List<Film> getFilm() {
-//		return film;
-//	}
-//
-//	public void setFilm(List<Film> film) {
-//		this.film = film;
-//	}
 
 	@Override
 	public String toString() {

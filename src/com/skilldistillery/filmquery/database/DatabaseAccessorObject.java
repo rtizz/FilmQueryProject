@@ -68,25 +68,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return film;
 	}
 
-	@Override
-	public Actor findActorById(int actorId) throws SQLException {
-		Actor actor = null;
-		Connection conn = DriverManager.getConnection(URL, USER, PASS);
-		String sql = "SELECT id, first_name, last_name FROM actor WHERE id = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, actorId);
-		ResultSet actorResult = stmt.executeQuery();
-		if (actorResult.next()) {
-			actor = new Actor(actorResult.getInt("id"), actorResult.getString("first_name"),
-					actorResult.getString("last_name"));
-
-		}
-		actorResult.close();
-		stmt.close();
-		conn.close();
-
-		return actor;
-	}
 
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
@@ -119,7 +100,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	
 	@Override
-	public List<Film> keywordSearch(String keyword) {
+	public List<Film> findFilmByKeywordSearch(String keyword) {
 		List<Film> kwSearch = new ArrayList<>();
 		List<Actor> kwActor;
 		Film filmList;
@@ -162,38 +143,23 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 }
 
-//public List<Film> findFilmsByActorId(int actorId) {
-//	  List<Film> films = new ArrayList<>();
-//	  try {
-//	    Connection conn = DriverManager.getConnection(URL, USER, PASS);
-//	    String sql = "SELECT id, title, description, release_year, language_id, rental_duration, ";
-//	                sql += " rental_rate, length, replacement_cost, rating, special_features "
-//	               +  " FROM film JOIN film_actor ON film.id = film_actor.film_id "
-//	               + " WHERE actor_id = ?";
-//	    PreparedStatement stmt = conn.prepareStatement(sql);
-//	    stmt.setInt(1, actorId);
-//	    ResultSet rs = stmt.executeQuery();
-//	    while (rs.next()) {
-//	      int filmId = rs.getInt("id");
-//	      String title = rs.getString("title");
-//	      String desc = rs.getString("description");
-//	      Integer releaseYear = rs.getInt("release_year");
-//	      int langId = rs.getInt("language_id");
-//	      int rentDur = rs.getInt("rental_duration");
-//	      double rate = rs.getDouble("rental_rate");
-//	      Integer length = rs.getInt("length");
-//	      double repCost = rs.getDouble("replacement_cost");
-//	      String rating = rs.getString("rating");
-//	      String features = rs.getString("special_features");
-//	      Film film = new Film(filmId, title, desc, releaseYear, langId,
-//	                           rentDur, rate, length, repCost, rating, features);
-//	      films.add(film);
-//	    }
-//	    rs.close();
-//	    stmt.close();
-//	    conn.close();
-//	  } catch (SQLException e) {
-//	    e.printStackTrace();
-//	  }
-//	  return films;
+//Corresponds to commented method in interface. Functional- not used.
+//	@Override
+//	public Actor findActorById(int actorId) throws SQLException {
+//		Actor actor = null;
+//		Connection conn = DriverManager.getConnection(URL, USER, PASS);
+//		String sql = "SELECT id, first_name, last_name FROM actor WHERE id = ?";
+//		PreparedStatement stmt = conn.prepareStatement(sql);
+//		stmt.setInt(1, actorId);
+//		ResultSet actorResult = stmt.executeQuery();
+//		if (actorResult.next()) {
+//			actor = new Actor(actorResult.getInt("id"), actorResult.getString("first_name"),
+//					actorResult.getString("last_name"));
+//
+//		}
+//		actorResult.close();
+//		stmt.close();
+//		conn.close();
+//
+//		return actor;
 //	}

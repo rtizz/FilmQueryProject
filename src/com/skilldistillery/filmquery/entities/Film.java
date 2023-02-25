@@ -18,8 +18,10 @@ public class Film {
 	private String language;
 	private List<Actor> actor;
 	
+	public Film() {}
 	
-	public Film(int filmId,String title, Integer releaseYear, String rating, String desc, String language) {
+	
+	public Film(int filmId, String title, Integer releaseYear, String rating, String desc, String language) {
 		this.filmId = filmId;
 		this.title = title;
 		this.desc = desc;

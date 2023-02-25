@@ -17,18 +17,9 @@ public class FilmQueryApp {
 
 	public static void main(String[] args) {
 		FilmQueryApp app = new FilmQueryApp();
-		//app.test();
 		app.launch();
 	}
 
-	private void test() {
-		List<Film> test2 = db.keywordSearch("Tisdale");
-		int count = 1;
-		for (Film film : test2) 
-			System.out.println(count + ". " + film.getTitle() + " " + film.getDesc());
-			count++;
-		}
-	
 
 	private void launch() {
 		Scanner input = new Scanner(System.in);
@@ -40,6 +31,7 @@ public class FilmQueryApp {
 		input.close();
 	}
 
+	
 	private boolean startUserInterface(Scanner input) {
 		System.out.println("Please select the following options.");
 		System.out.println("1. Look up a film by its ID.\n2. Look up a film by keyword search.\n3. Exit Application");
@@ -74,11 +66,11 @@ public class FilmQueryApp {
 			List<Film> keywordSearch = null;
 			if (keywordInput.equals("")) {			
 			System.out.println("Please enter valid search criteria");
-			keywordSearch = db.keywordSearch(keywordInput);
+			keywordSearch = db.findFilmByKeywordSearch(keywordInput);
 			} else if (keywordInput.matches(".*\\d.*")) {
 				System.out.println("'" + keywordInput + "' contains numbers, try again");
 			} else if (keywordInput != null) {
-				keywordSearch = db.keywordSearch(keywordInput);
+				keywordSearch = db.findFilmByKeywordSearch(keywordInput);
 				int count = 1;
 				for (Film search : keywordSearch) {
 					System.out.println(count + ". Film: " + search.getTitle() + " | Year: " + search.getReleaseYear() + " | Rating: "
@@ -88,9 +80,6 @@ public class FilmQueryApp {
 				}
 			} 
 			
-			if(keywordSearch == null) { 
-				System.out.println("Sorry, that keyword is not contained in this database");
-			}
 			break;
 		case 3:
 			System.out.println("Goodbye");
