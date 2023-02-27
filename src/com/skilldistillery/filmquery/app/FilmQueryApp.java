@@ -1,13 +1,12 @@
 package com.skilldistillery.filmquery.app;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
 import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
-import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class FilmQueryApp {
@@ -35,12 +34,26 @@ public class FilmQueryApp {
 	private boolean startUserInterface(Scanner input) {
 		System.out.println("Please select the following options.");
 		System.out.println("1. Look up a film by its ID.\n2. Look up a film by keyword search.\n3. Exit Application");
-		int userInput = input.nextInt();
+		int userInput = 0;
+		try {
+		userInput = input.nextInt();
+		}catch (InputMismatchException e) {
+			System.out.println("");
+		} finally {
+			input.nextLine();
+		}
 		Film film = null;
 		switch (userInput) {
 		case 1:
 			System.out.println("Enter a valid film ID(1-1000) to get its corresponding film.");
-			int filmId = input.nextInt();
+			int filmId = 0;
+			try {
+				filmId = input.nextInt();				
+				}catch (InputMismatchException e) {
+					System.out.println("Enter a valid number");
+				} finally {
+					input.nextLine();
+				}
 			if (filmId >= 1 && filmId <= 1000) {
 				try {
 					film = db.findFilmById(filmId);
@@ -85,6 +98,7 @@ public class FilmQueryApp {
 			System.out.println("Goodbye");
 			return isTrue = false;
 		default:
+			System.out.println("Not a valid entry. Please try again");
 		}
 
 		return isTrue;
